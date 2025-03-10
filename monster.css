@@ -1,0 +1,95 @@
+body {
+    background: url('Images/bg-image-index.png') no-repeat center center fixed;
+    background-size: cover;
+    background-blend-mode: multiply;
+    background-color: rgba(50, 25, 10, 0.7);
+    font-family: Arial, sans-serif;
+    color: #fff;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes gradientWave {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+header {
+    padding: 20px;
+    background: linear-gradient(270deg, rgba(218, 165, 32, 0.6), rgba(139, 69, 19, 0.6), rgba(218, 165, 32, 0.6));
+    background-size: 200% 200%;
+    animation: gradientWave 6s ease infinite;
+    color: white;
+}
+
+h1 {
+    margin: 0;
+}
+
+main {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.info-container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.info-box {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    display: inline-block; /* Permite que o tamanho seja ajustado ao conteúdo */
+    width: auto; /* Permite que a largura seja ajustada automaticamente */
+    min-width: 250px; /* Evita que fique muito pequeno */
+}
+
+.monster-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+    font-size: 18px;
+}
+
+.monster-table th, .monster-table td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.monster-table th {
+    background-color: #b8860b;
+    color: white;
+}
+
+.monster-table tbody tr:nth-child(even) {
+    background-color: rgba(218, 165, 32, 0.2);
+}
+
+.monster-table tbody tr:hover {
+    background-color: rgba(218, 165, 32, 0.3);
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    padding: 5px 0;
+}
