@@ -23,7 +23,7 @@ body {
 }
 
 header {
-    padding: 20px;
+    padding: 10px;
     background: linear-gradient(270deg, rgba(218, 165, 32, 0.6), rgba(139, 69, 19, 0.6), rgba(218, 165, 32, 0.6));
     background-size: 200% 200%;
     animation: gradientWave 6s ease infinite;
@@ -32,6 +32,11 @@ header {
 
 h1 {
     margin: 0;
+    font-size: 24px; /* Reduzido de 28px para 24px */
+}
+
+h2 {
+    font-size: 18px; /* Reduzido de 22px para 18px */
 }
 
 main {
@@ -53,7 +58,7 @@ main {
     max-width: 600px;
     margin-right: 10px;
     border-radius: 5px;
-    border: none;
+    border: 2px solid rgba(237, 187, 61, 0.6); /* Adiciona uma borda de 2px apenas ao redor da barra de pesquisa */
 }
 
 .search-container button {
@@ -75,7 +80,7 @@ main {
     margin-top: 5px;
     z-index: 1000;
     text-align: left;
-    left: 44%;
+    left: 44%; /* Mantém left em 44% */
     transform: translateX(-50%);
 }
 
@@ -112,21 +117,55 @@ main {
     background: rgba(0, 0, 0, 0.5);
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    transition: transform 0.3s, background 0.3s;
+    transition: transform 0.3s, background-color 0.3s, opacity 0.3s;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    opacity: 0.8; /* Tornar a imagem de fundo mais transparente */
 }
 
-.category-box:hover {
-    transform: scale(1.05);
-    background: rgba(0, 0, 0, 0.7);
+.category-box::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    z-index: 1;
 }
 
 .category-box h3 {
     margin: 0;
     color: #b8860b;
+    position: relative;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 5px;
+    border-radius: 5px;
+}
+
+#small-monsters {
+    background-image: url('Images/SmallMonster.png');
+}
+
+#large-monsters {
+    background-image: url('Images/LargeMonster.png');
+}
+
+#special-monsters {
+    background-image: url('Images/ElderDragon.png');
+}
+
+.category-box:hover {
+    transform: scale(1.05);
+    background-color: rgba(0, 0, 0, 0.7);
+    opacity: 1; /* Destacar a imagem de fundo ao passar o mouse */
 }
 
 footer {
