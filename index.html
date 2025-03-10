@@ -14,11 +14,23 @@
     
     <main>
         <div class="search-container">
-            <input type="text" id="search" placeholder="Digite o nome do monstro...">
+            <input type="text" id="search" placeholder="Digite o nome do monstro..." autocomplete="off" autocorrect="off">
+            <div id="suggestions"></div>
             <button id="searchBtn">Pesquisar</button>
         </div>
         
-        <div class="results-container">
+        <div class="results-container"></div>
+        
+        <div class="category-container">
+            <div class="category-box" id="small-monsters">
+                <h3>Small Monsters</h3>
+            </div>
+            <div class="category-box" id="large-monsters">
+                <h3>Large Monsters</h3>
+            </div>
+            <div class="category-box" id="special-monsters">
+                <h3>Special Monsters</h3>
+            </div>
         </div>
     </main>
     
