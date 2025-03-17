@@ -75,28 +75,66 @@ main {
     position: absolute;
     width: 80%;
     max-width: 600px;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.9);
     border-radius: 5px;
     margin-top: 5px;
     z-index: 1000;
     text-align: left;
-    left: 44%; /* Mantém left em 44% */
+    left: 44%;
     transform: translateX(-50%);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
-#suggestions ul {
+.suggestions-list {
     list-style: none;
     margin: 0;
     padding: 0;
+    max-height: 300px;
+    overflow-y: auto;
 }
 
-#suggestions li {
-    padding: 10px;
+.suggestion-item {
+    padding: 10px 15px;
     cursor: pointer;
+    transition: background-color 0.2s;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-#suggestions li:hover {
-    background: rgba(255, 255, 255, 0.1);
+.suggestion-item:hover {
+    background-color: rgba(184, 134, 11, 0.2);
+}
+
+.exact-match {
+    background-color: rgba(184, 134, 11, 0.2);
+    font-weight: bold;
+}
+
+/* Estilo para a barra de pesquisa */
+#search {
+    padding: 10px;
+    font-size: 16px;
+    width: 80%;
+    max-width: 600px;
+    margin-right: 10px;
+    border-radius: 5px;
+    border: 2px solid rgba(184, 134, 11, 0.6);
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+}
+
+#searchBtn {
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: none;
+    background-color: #b8860b;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#searchBtn:hover {
+    background-color: #9b7209;
 }
 
 .results-container {
@@ -176,4 +214,8 @@ footer {
     position: fixed;
     width: 100%;
     bottom: 0;
+}
+
+.exact-match:hover {
+    background-color: rgba(184, 134, 11, 0.3);
 }

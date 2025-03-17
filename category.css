@@ -1,0 +1,373 @@
+/* Estilos base */
+:root {
+    --small-color: #4a9052;
+    --large-color: #b8860b;
+    --elder-color: #8b00ff;
+    --card-bg: rgba(0, 0, 0, 0.85);
+    --text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Container principal */
+.monsters-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    padding: 30px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Estilos dos cards */
+.monster-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilos específicos por categoria */
+.small-card {
+    border: 2px solid var(--small-color);
+}
+
+.large-card {
+    border: 2px solid var(--large-color);
+}
+
+.elder-card {
+    border: 2px solid var(--elder-color);
+}
+
+.monster-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* Conteúdo do card */
+.monster-card-content {
+    padding: 20px;
+}
+
+.monster-image-container {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.monster-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.3s ease;
+}
+
+.monster-image.loaded {
+    opacity: 1;
+}
+
+.monster-card:hover .monster-image {
+    transform: scale(1.05);
+}
+
+/* Títulos e texto */
+.monster-card h3 {
+    font-size: 1.5em;
+    margin: 0 0 15px 0;
+    color: #fff;
+    text-shadow: var(--text-shadow);
+}
+
+.monster-description {
+    font-size: 0.9em;
+    color: #ddd;
+    margin: 15px 0;
+    line-height: 1.4;
+    max-height: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Badges e informações */
+.monster-type-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    color: white;
+    text-shadow: var(--text-shadow);
+    z-index: 1;
+}
+
+.small-card .monster-type-badge {
+    background: var(--small-color);
+}
+
+.large-card .monster-type-badge {
+    background: var(--large-color);
+}
+
+.elder-card .monster-type-badge {
+    background: var(--elder-color);
+}
+
+/* Botão de detalhes */
+.view-details-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.small-card .view-details-btn {
+    background: var(--small-color);
+    color: white;
+}
+
+.large-card .view-details-btn {
+    background: var(--large-color);
+    color: white;
+}
+
+.elder-card .view-details-btn {
+    background: var(--elder-color);
+    color: white;
+}
+
+.view-details-btn:hover {
+    filter: brightness(1.2);
+}
+
+/* Header e navegação */
+.category-header {
+    background: linear-gradient(270deg, rgba(218, 165, 32, 0.6), rgba(139, 69, 19, 0.6), rgba(218, 165, 32, 0.6));
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.category-header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.back-button {
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(218, 165, 32, 0.6);
+    white-space: nowrap;
+}
+
+.back-button:hover {
+    background: rgba(218, 165, 32, 0.6);
+    transform: scale(1.05);
+}
+
+.category-description {
+    margin: 15px auto;
+    max-width: 800px;
+    padding: 10px;
+    font-size: 0.9em;
+}
+
+/* Loading e estados vazios */
+.loading, .no-monsters {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+    background: rgba(0,0,0,0.6);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 1.2em;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .monsters-list {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        padding: 15px;
+        gap: 15px;
+    }
+
+    .monster-card-content {
+        padding: 15px;
+    }
+
+    .category-description {
+        margin: 15px;
+        font-size: 1em;
+    }
+
+    .category-header {
+        padding-right: 120px;
+    }
+    
+    .category-header h1 {
+        font-size: 20px;
+    }
+}
+
+.back-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background: rgba(184, 134, 11, 0.8);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+    margin: 10px;
+}
+
+.back-button:hover {
+    background: rgba(184, 134, 11, 1);
+}
+
+.large-monsters .monster-card {
+    border: 2px solid rgba(184, 134, 11, 0.5);
+}
+
+.elder-dragons .monster-card {
+    border: 2px solid rgba(148, 0, 211, 0.5);
+    background: rgba(0, 0, 0, 0.8);
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+.loading {
+    animation: pulse 1.5s infinite;
+    padding: 30px;
+    background: rgba(184, 134, 11, 0.2);
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 300px;
+}
+
+.monster-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.monster-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(184, 134, 11, 0.2), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.monster-card:hover::before {
+    opacity: 1;
+}
+
+.monster-card img {
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+
+.monster-card img.loaded {
+    opacity: 1;
+}
+
+.elder-dragon-badge {
+    background: rgba(148, 0, 211, 0.8);
+}
+
+.monster-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.monster-icon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    margin-right: 10px;
+}
+
+.monster-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+/* Melhorias na página de detalhes */
+.monster-details {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.monster-header-details {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.monster-header-details img {
+    max-width: 60px;
+    height: auto;
+}
+
+/* Loading animation */
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+}
+
+.loading::after {
+    content: '';
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #b8860b;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Estilo para imagens não encontradas */
+.monster-image[src*="placeholder"],
+.monster-icon[src*="placeholder"] {
+    opacity: 0.5;
+} 
