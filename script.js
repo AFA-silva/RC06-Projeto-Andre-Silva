@@ -11,24 +11,37 @@ let monstersCache = null;
 const MONSTER_CATEGORIES = {
     small: {
         type: 'small',
-        title: 'Pequenos Monstros',
-        filter: monster => monster.type && monster.type.toLowerCase() === 'small',
-        description: 'Explore as criaturas menores que habitam o Novo Mundo'
+        title: 'Small Monsters',
+        filter: monster => {
+            // Include monsters that are either explicitly marked as small
+            // or have a size property indicating they're small
+            const isSmall = 
+                (monster.type && monster.type.toLowerCase().includes('small')) ||
+                (monster.size && monster.size.toLowerCase().includes('small'));
+            
+            // Debug log to see what's being filtered
+            if (isSmall) {
+                console.log('Including small monster:', monster.name);
+            }
+            
+            return isSmall;
+        },
+        description: 'Explore the smaller creatures that inhabit the New World'
     },
     large: {
         type: 'large',
-        title: 'Grandes Monstros',
+        title: 'Large Monsters',
         filter: monster => 
             monster.type && 
             monster.type.toLowerCase() === 'large' && 
             (!monster.species || !monster.species.toLowerCase().includes('elder dragon')),
-        description: 'Enfrente os poderosos predadores que dominam seus territórios'
+        description: 'Face the powerful predators that dominate their territories'
     },
     elder: {
         type: 'elder',
-        title: 'Dragões Anciãos',
+        title: 'Elder Dragons',
         filter: monster => monster.species && monster.species.toLowerCase().includes('elder dragon'),
-        description: 'Conheça as lendárias criaturas que moldam o mundo de Monster Hunter'
+        description: 'Meet the legendary creatures that shape the world of Monster Hunter'
     }
 };
 
@@ -102,15 +115,42 @@ function getMonsterImagePath(monsterName, type, category) {
         .replace(/\s+/g, '-')
         .replace(/[^a-z0-9-]/g, '');
     
+    // Special cases mapping for monsters with different image names
+    const specialCases = {
+        'gajalaka': 'gajalaka',
+        'vespoid': 'vespoid',
+        'hornetaur': 'hornetaur',
+        'gajau': 'gajau',
+        'kestodon': 'kestodon',
+        'gastodon': 'gastodon',
+        'noios': 'noios',
+        'raphinos': 'raphinos',
+        'shamos': 'shamos',
+        'girros': 'girros',
+        'jagras': 'jagras',
+        'mernos': 'mernos',
+        'apceros': 'apceros',
+        'aptonoth': 'aptonoth',
+        'kelbi': 'kelbi',
+        // Add any other small monsters that need special handling
+    };
+
+    // Use special case name if it exists
+    const finalName = specialCases[formattedName] || formattedName;
+    
     // Define o caminho base dependendo da categoria
     let basePath = '';
     if (category === 'small') {
-        basePath = type === 'monsters' ? 'small-monsters' : 'small-icons';
+        basePath = type === 'monsters' ? 'monsters/small' : 'icons/small';
     } else {
         basePath = type === 'monsters' ? 'monsters' : 'icons';
     }
 
-    return `Images/${basePath}/${formattedName}.png`;
+    // Log the final path for debugging
+    const finalPath = `Images/${basePath}/${finalName}.png`;
+    console.log(`Generated path for ${monsterName}:`, finalPath);
+
+    return finalPath;
 }
 
 /**
@@ -137,7 +177,7 @@ async function renderMonsterCard(monster, category) {
     const monsterImagePath = getMonsterImagePath(monster.name, 'monsters', category);
     const monsterIconPath = getMonsterImagePath(monster.name, 'icons', category);
 
-    console.log('Tentando carregar:', {
+    console.log('Loading:', {
         name: monster.name,
         imagePath: monsterImagePath,
         iconPath: monsterIconPath
@@ -151,7 +191,8 @@ async function renderMonsterCard(monster, category) {
                     <img src="${monsterIconPath}" 
                          alt="${monster.name} icon" 
                          class="monster-icon"
-                         onerror="this.src='Images/icon-placeholder.png'; console.log('Erro ao carregar ícone:', this.src);">
+                         onerror="this.src='Images/icon-placeholder.png'; console.log('Error loading icon:', this.src);"
+                         onload="this.classList.add('loaded')">
                     <h3>${monster.name}</h3>
                 </div>
                 <div class="monster-image-container">
@@ -159,16 +200,16 @@ async function renderMonsterCard(monster, category) {
                          alt="${monster.name}" 
                          class="monster-image"
                          loading="lazy"
-                         onerror="this.src='Images/monster-placeholder.png'; console.log('Erro ao carregar imagem:', this.src);"
+                         onerror="this.src='Images/monster-placeholder.png'; console.log('Error loading image:', this.src);"
                          onload="this.classList.add('loaded')">
                 </div>
                 <div class="monster-info">
-                    <span class="monster-type">${monster.type || 'Desconhecido'}</span>
+                    <span class="monster-type">${monster.type || 'Unknown'}</span>
                     ${monster.species ? `<span class="monster-species">${monster.species}</span>` : ''}
                 </div>
-                <p class="monster-description">${monster.description || 'Informações indisponíveis.'}</p>
+                <p class="monster-description">${monster.description || 'Information unavailable.'}</p>
                 <button class="view-details-btn" onclick="window.location.href='monster.html?monster=${encodeURIComponent(monster.name)}'">
-                    Ver Detalhes
+                    View Details
                 </button>
             </div>
         </div>
@@ -181,33 +222,40 @@ async function renderMonsterCard(monster, category) {
  * @param {Array} monsters - Array de monstros
  */
 async function renderMonstersList(category, monsters) {
+    // Debug log to see all monsters and their types
+    console.log('All monsters:', monsters.map(m => ({
+        name: m.name,
+        type: m.type,
+        size: m.size
+    })));
+    
     const containerElement = document.querySelector('.monsters-list');
     if (!containerElement) return;
 
     const categoryConfig = MONSTER_CATEGORIES[category];
     const filteredMonsters = monsters.filter(categoryConfig.filter);
 
-    // Atualiza título e descrição
+    // Update title and description
     const titleElement = document.querySelector('h1');
     const descriptionElement = document.querySelector('.category-description p');
     
     if (titleElement) titleElement.textContent = categoryConfig.title;
     if (descriptionElement) descriptionElement.textContent = categoryConfig.description;
 
-    // Mostra loading
-    containerElement.innerHTML = '<div class="loading">Carregando monstros...</div>';
+    // Show loading
+    containerElement.innerHTML = '<div class="loading">Loading monsters...</div>';
 
     try {
-        // Renderiza todos os cards
+        // Render all cards
         const monsterCards = await Promise.all(
             filteredMonsters.map(monster => renderMonsterCard(monster, category))
         );
 
         containerElement.innerHTML = monsterCards.join('') || 
-            '<div class="no-monsters">Nenhum monstro encontrado nesta categoria.</div>';
+            '<div class="no-monsters">No monsters found in this category.</div>';
     } catch (error) {
-        console.error('Erro ao renderizar monstros:', error);
-        containerElement.innerHTML = '<div class="error">Erro ao carregar os monstros.</div>';
+        console.error('Error rendering monsters:', error);
+        containerElement.innerHTML = '<div class="error">Error loading monsters.</div>';
     }
 }
 
@@ -393,32 +441,17 @@ document.addEventListener("DOMContentLoaded", async () => {
                     const foundMonster = data.find(monster => monster.name === monsterName);
 
                     if (foundMonster) {
-                        document.getElementById("monsterName").textContent = foundMonster.name;
-                        document.getElementById("monsterDescription").textContent = foundMonster.description || "N/A";
-                        document.getElementById("monsterImage").src = foundMonster.img || "placeholder.jpg";
-                        document.getElementById("monsterType").textContent = foundMonster.type || "N/A";
-                        document.getElementById("monsterRace").textContent = foundMonster.species || "N/A";
-                        
-                        const ailmentsList = document.getElementById("monsterAilments");
-                        ailmentsList.innerHTML = (foundMonster.ailments && foundMonster.ailments.length > 0) 
-                            ? foundMonster.ailments.map(a => `<li>${a.name}: ${a.description || 'N/A'}</li>`).join('') 
-                            : "<li>N/A</li>";
-
-                        const resistancesList = document.getElementById("monsterResistances");
-                        resistancesList.innerHTML = (foundMonster.resistances && foundMonster.resistances.length > 0) 
-                            ? foundMonster.resistances.map(r => `<li>${r.element} (${r.stars ? '★'.repeat(r.stars) : 'N/A'})</li>`).join('') 
-                            : "<li>N/A</li>";
-
-                        const weaknessesList = document.getElementById("monsterWeaknesses");
-                        weaknessesList.innerHTML = (foundMonster.weaknesses && foundMonster.weaknesses.length > 0) 
-                            ? foundMonster.weaknesses.filter(w => w.stars >= 2).map(w => `<li>${w.element} (★${w.stars})</li>`).join('') 
-                            : "<li>N/A</li>";
+                        updateMonsterDetails(foundMonster);
                     } else {
-                        document.getElementById("monsterName").textContent = "Monstro não encontrado";
-                        document.getElementById("monsterDescription").textContent = "Não foi possível carregar as informações.";
+                        document.getElementById("monsterName").textContent = "Monster not found";
+                        document.getElementById("monsterDescription").textContent = "Could not load monster information.";
                     }
                 })
-                .catch(error => console.error("Erro ao carregar os dados do monstro:", error));
+                .catch(error => {
+                    console.error("Error loading monster data:", error);
+                    document.getElementById("monsterName").textContent = "Error";
+                    document.getElementById("monsterDescription").textContent = "Failed to load monster information.";
+                });
         }
     }
 
@@ -441,20 +474,55 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 // Atualização da página de detalhes do monstro
 async function updateMonsterDetails(monster) {
-    const monsterImage = await getMonsterImagePath(monster.name, 'monsters', 'small');
-    const monsterIconPath = await getMonsterImagePath(monster.name, 'icons', 'small');
+    // Determine the correct category and add appropriate class to body
+    let category = 'small';
+    if (monster.species && monster.species.toLowerCase().includes('elder dragon')) {
+        category = 'elder';
+    } else if (monster.type && monster.type.toLowerCase() === 'large') {
+        category = 'large';
+    }
 
+    // Remove any existing category classes
+    document.body.classList.remove('monster-small', 'monster-large', 'monster-elder');
+    // Add the appropriate category class
+    document.body.classList.add(`monster-${category}`);
+
+    // Get image paths
+    const monsterImagePath = getMonsterImagePath(monster.name, 'monsters', category);
+    const monsterIconPath = getMonsterImagePath(monster.name, 'icons', category);
+
+    // Update basic information
     document.getElementById("monsterName").textContent = monster.name;
-    document.getElementById("monsterDescription").textContent = monster.description || "N/A";
-    document.getElementById("monsterImage").src = monsterImage;
-    document.getElementById("monsterIcon").src = monsterIconPath;
-    document.getElementById("monsterType").textContent = monster.type || "N/A";
-    document.getElementById("monsterRace").textContent = monster.species || "N/A";
+    document.getElementById("monsterDescription").textContent = monster.description || "Information unavailable.";
+    document.getElementById("monsterType").textContent = monster.type || "Unknown";
+    document.getElementById("monsterRace").textContent = monster.species || "Unknown";
+    document.getElementById("monsterTypeBadge").textContent = monster.type || "Unknown";
+
+    // Update images with error handling
+    const monsterImage = document.getElementById("monsterImage");
+    const monsterIcon = document.getElementById("monsterIcon");
+
+    // Function to handle image loading
+    const loadImage = (img, src, fallbackSrc) => {
+        img.onload = function() {
+            this.classList.add('loaded');
+        };
+        img.onerror = function() {
+            console.log('Error loading image:', src);
+            this.src = fallbackSrc;
+        };
+        img.src = src;
+    };
+
+    // Load images
+    loadImage(monsterImage, monsterImagePath, 'Images/monster-placeholder.png');
+    loadImage(monsterIcon, monsterIconPath, 'Images/icon-placeholder.png');
     
-    // Atualiza as listas
+    // Update lists
     updateMonsterList("monsterAilments", monster.ailments);
     updateMonsterList("monsterResistances", monster.resistances);
     updateMonsterList("monsterWeaknesses", monster.weaknesses);
+    updateMonsterList("monsterHabitats", monster.locations);
 }
 
 /**
@@ -467,24 +535,36 @@ function updateMonsterList(elementId, items) {
     if (!element) return;
 
     if (!items || items.length === 0) {
-        element.innerHTML = "<li>N/A</li>";
+        const sectionTitle = elementId.replace('monster', '').toLowerCase();
+        element.innerHTML = `<li>No ${sectionTitle} available</li>`;
         return;
     }
 
     switch(elementId) {
         case "monsterAilments":
             element.innerHTML = items.map(a => 
-                `<li>${a.name}: ${a.description || 'N/A'}</li>`
+                `<li>${a.name}: ${a.description || 'No description available'}</li>`
             ).join('');
             break;
         case "monsterResistances":
             element.innerHTML = items.map(r => 
-                `<li>${r.element} ${r.stars ? '★'.repeat(r.stars) : 'N/A'}</li>`
+                `<li>${r.element} ${r.stars ? '★'.repeat(r.stars) : 'No resistance data'}</li>`
             ).join('');
             break;
         case "monsterWeaknesses":
-            element.innerHTML = items.filter(w => w.stars >= 2)
-                .map(w => `<li>${w.element} ★${w.stars}</li>`).join('');
+            const weaknesses = items.filter(w => w.stars >= 2);
+            if (weaknesses.length === 0) {
+                element.innerHTML = '<li>No weaknesses available</li>';
+            } else {
+                element.innerHTML = weaknesses.map(w => 
+                    `<li>${w.element} ★${w.stars}</li>`
+                ).join('');
+            }
+            break;
+        case "monsterHabitats":
+            element.innerHTML = items.map(l => 
+                `<li>${l.name}</li>`
+            ).join('');
             break;
     }
 }

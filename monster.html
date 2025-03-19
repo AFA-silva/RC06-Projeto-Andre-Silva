@@ -1,68 +1,90 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monstro - MHW</title>
+    <title>Monster Details - MHW</title>
     <link rel="stylesheet" href="monster.css">
 </head>
 <body>
-    <header>
+    <header class="monster-header">
         <nav>
-            <a href="index.html" class="back-button">Voltar ao Início</a>
+            <a href="index.html" class="back-button">Back to Home</a>
         </nav>
-        <h1 id="monsterName">Carregando...</h1>
-        <img id="monsterIcon" src="" alt="Ícone do monstro">
-        <img id="monsterImage" src="" alt="Imagem do monstro">
+        <div class="monster-title-container">
+            <img id="monsterIcon" src="" alt="Monster Icon" class="monster-icon">
+            <h1 id="monsterName">Loading...</h1>
+        </div>
     </header>
-    <main>
-        <div class="info-container">
-            <div class="info-box">
-                <table class="monster-table">
-                    <tr>
-                        <th>Tipo</th>
-                        <th>Raça</th>
-                    </tr>
-                    <tr>
-                        <td id="monsterType">Carregando...</td>
-                        <td id="monsterRace">Carregando...</td>
-                    </tr>
-                    <tr>
-                        <th colspan="2">Descrição</th>
-                    </tr>
-                    <tr>
-                        <td colspan="2" id="monsterDescription">A obter informações...</td>
-                    </tr>
-                </table>
-            </div>
-            <div class="info-box">
-                <table class="monster-table">
-                    <tr>
-                        <th>Fraquezas</th>
-                    </tr>
-                    <tr>
-                        <td><ul id="monsterWeaknesses">Carregando...</ul></td>
-                    </tr>
-                    <tr>
-                        <th>Resistências</th>
-                    </tr>
-                    <tr>
-                        <td><ul id="monsterResistances">Carregando...</ul></td>
-                    </tr>
-                </table>
-            </div>
-            <div class="info-box">
-                <table class="monster-table">
-                    <tr>
-                        <th>Habilidades</th>
-                    </tr>
-                    <tr>
-                        <td><ul id="monsterAilments">Carregando...</ul></td>
-                    </tr>
-                </table>
+
+    <main class="monster-content">
+        <div class="monster-hero">
+            <div class="monster-image-container">
+                <img id="monsterImage" src="" alt="Monster Image" class="monster-image">
+                <div class="monster-type-badge" id="monsterTypeBadge">Loading...</div>
             </div>
         </div>
+
+        <div class="monster-info-grid">
+            <section class="info-section basic-info">
+                <h2>Basic Information</h2>
+                <div class="info-content">
+                    <div class="info-row">
+                        <span class="info-label">Species:</span>
+                        <span id="monsterRace" class="info-value">Loading...</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Type:</span>
+                        <span id="monsterType" class="info-value">Loading...</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="info-section description">
+                <h2>Description</h2>
+                <div class="info-content">
+                    <p id="monsterDescription">Loading description...</p>
+                </div>
+            </section>
+
+            <section class="info-section weaknesses">
+                <h2>Weaknesses</h2>
+                <div class="info-content">
+                    <ul id="monsterWeaknesses" class="element-list">
+                        <li>Loading weaknesses...</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="info-section resistances">
+                <h2>Resistances</h2>
+                <div class="info-content">
+                    <ul id="monsterResistances" class="element-list">
+                        <li>Loading resistances...</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="info-section ailments">
+                <h2>Ailments</h2>
+                <div class="info-content">
+                    <ul id="monsterAilments" class="ailment-list">
+                        <li>Loading ailments...</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="info-section habitats">
+                <h2>Habitats</h2>
+                <div class="info-content">
+                    <ul id="monsterHabitats" class="habitat-list">
+                        <li>Loading habitats...</li>
+                    </ul>
+                </div>
+            </section>
+        </div>
     </main>
+
     <script src="script.js"></script>
 </body>
 </html>
