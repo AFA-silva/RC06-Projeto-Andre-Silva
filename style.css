@@ -219,3 +219,128 @@ footer {
 .exact-match:hover {
     background-color: rgba(184, 134, 11, 0.3);
 }
+
+/* Section Titles */
+.section-title {
+    color: #b8860b;
+    font-size: 24px;
+    text-align: center;
+    margin: 40px 0 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Biome Categories */
+.biome-categories {
+    margin-top: 40px;
+    display: grid;  /* Changed from flex to grid */
+    grid-template-columns: repeat(3, 1fr);  /* Creates 3 equal columns */
+    gap: 20px;
+    max-width: 800px;  /* Added max-width to center content better */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 20px;  /* Added padding for smaller screens */
+}
+
+/* Add responsive design for smaller screens */
+@media (max-width: 768px) {
+    .biome-categories {
+        grid-template-columns: repeat(2, 1fr);  /* Switch to 2 columns on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .biome-categories {
+        grid-template-columns: 1fr;  /* Single column on very small screens */
+    }
+}
+
+.category-box.biome {
+    width: 220px;  /* Reduced from 280px */
+    height: 140px; /* Reduced from 180px */
+    background-position: center;
+    background-size: cover;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+    margin: 10px;  /* Added margin for better spacing */
+}
+
+/* Individual Biome Backgrounds */
+#ancient-forest {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                      url('Images/locations/ancient-forest.jpg');
+}
+
+#wildspire-waste {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                      url('Images/locations/wildspire-waste.jpg');
+}
+
+#coral-highlands {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                      url('Images/locations/coral-highlands.jpg');
+}
+
+#rotten-vale {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                      url('Images/locations/rotten-vale.jpg');
+}
+
+#elders-recess {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                      url('Images/locations/elders-recess.jpg');
+}
+
+#hoarfrost-reach {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                      url('Images/locations/hoarfrost-reach.jpg');
+}
+
+/* Enhanced Hover Effects for Biome Boxes */
+.category-box.biome:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+}
+
+.category-box.biome:hover h3 {
+    transform: scale(1.1);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.8);
+}
+
+/* Make sure the text is visible */
+.category-box.biome h3 {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+    transition: all 0.3s ease;
+}
+
+/* Add overlay to make text more readable */
+.category-box.biome::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    transition: background 0.3s ease;
+}
+
+.category-box.biome:hover::before {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+}
+
+footer a:visited {
+    color: white;
+}
+
+footer a:hover {
+    color: #b8860b;  /* Optional: adds a gold color on hover */
+    text-decoration: underline;
+}

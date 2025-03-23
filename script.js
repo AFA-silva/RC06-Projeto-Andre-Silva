@@ -77,9 +77,18 @@ async function fetchMonstersData() {
  */
 function initializeCategoryBoxes() {
     const categoryBoxes = {
+        // Monster Categories
         'small-monsters': 'small-monsters.html',
         'large-monsters': 'large-monsters.html',
-        'special-monsters': 'elder-dragons.html'
+        'special-monsters': 'elder-dragons.html',
+        
+        // Biome Categories
+        'ancient-forest': 'location.html?location=Ancient Forest',
+        'wildspire-waste': 'location.html?location=Wildspire Waste',
+        'coral-highlands': 'location.html?location=Coral Highlands',
+        'rotten-vale': 'location.html?location=Rotten Vale',
+        'elders-recess': 'location.html?location=Elder\'s Recess',
+        'hoarfrost-reach': 'location.html?location=Hoarfrost Reach'
     };
 
     Object.entries(categoryBoxes).forEach(([id, page]) => {
@@ -637,9 +646,138 @@ function updateMonsterList(elementId, items) {
                 element.innerHTML = '<li>No habitats available</li>';
                 return;
             }
-            element.innerHTML = items.map(l => 
+            // Take only the first 4 habitats
+            const limitedHabitats = items.slice(0, 4);
+            element.innerHTML = limitedHabitats.map(l => 
                 `<li>${l.name}</li>`
             ).join('');
             break;
     }
+}
+
+// Location descriptions
+const LOCATION_DESCRIPTIONS = {
+    'Ancient Forest': 'A dense forest teeming with life, featuring multiple layers of terrain from forest floor to canopy. Home to various monsters that have adapted to life among the ancient trees.',
+    'Wildspire Waste': 'A vast desert area interspersed with wetlands, creating a unique ecosystem where both arid-climate and marsh-dwelling monsters thrive.',
+    'Coral Highlands': 'A unique area resembling a coral reef in the sky, with floating coral formations and unique wind-riding creatures.',
+    'Rotten Vale': 'A deep valley where deceased creatures decompose, creating a toxic environment home to scavenging monsters.',
+    'Elder\'s Recess': 'A volcanic region rich in bioenergy, serving as a nest for powerful Elder Dragons and other formidable creatures.',
+    'Hoarfrost Reach': 'A frigid region covered in deep snow, where monsters have evolved special adaptations to survive the extreme cold.'
+};
+
+// Handle location page loading
+if (window.location.pathname.includes('location.html')) {
+    const params = new URLSearchParams(window.location.search);
+    const locationName = params.get('location');
+
+    if (locationName) {
+        // Update page title and description
+        document.getElementById('locationTitle').textContent = locationName;
+        document.getElementById('locationDesc').textContent = LOCATION_DESCRIPTIONS[locationName] || 'Description not available.';
+
+        // Add location-specific theme class
+        const themeClass = locationName.toLowerCase().replace(/\s+/g, '-') + '-theme';
+        document.body.classList.add(themeClass);
+
+        // Set location image
+        const locationImage = document.getElementById('locationImage');
+        if (locationImage) {
+            locationImage.src = `Images/locations/${locationName.toLowerCase().replace(/\s+/g, '-')}.jpg`;
+            locationImage.alt = locationName;
+        }
+
+        // Load monsters for this location
+        loadLocationMonsters(locationName);
+    }
+}
+
+async function loadLocationMonsters(locationName) {
+    const monstersGrid = document.querySelector('.monsters-grid');
+    if (!monstersGrid) return;
+
+    try {
+        const monsters = await fetchMonstersData();
+        const locationMonsters = monsters.filter(monster => 
+            monster.locations && 
+            monster.locations.some(loc => 
+                loc.name.toLowerCase() === locationName.toLowerCase()
+            )
+        );
+
+        if (locationMonsters.length === 0) {
+            monstersGrid.innerHTML = '<div class="no-monsters">No monsters found in this location.</div>';
+            return;
+        }
+
+        const monsterCards = await Promise.all(
+            locationMonsters.map(monster => renderMonsterCard(monster, getMonsterCategory(monster)))
+        );
+
+        monstersGrid.innerHTML = monsterCards.join('');
+    } catch (error) {
+        console.error('Error loading location monsters:', error);
+        monstersGrid.innerHTML = '<div class="error">Error loading monsters.</div>';
+    }
+}
+
+function getMonsterCategory(monster) {
+    if (monster.species && monster.species.toLowerCase().includes('elder dragon')) {
+        return 'elder';
+    } else if (monster.type && monster.type.toLowerCase() === 'large') {
+        return 'large';
+    }
+    return 'small';
+}
+
+function renderLocationMonsters(monsters) {
+    const monstersByType = {
+        small: monsters.filter(m => m.type?.toLowerCase() === 'small'),
+        large: monsters.filter(m => m.type?.toLowerCase() === 'large' && !m.species?.toLowerCase().includes('elder dragon')),
+        elder: monsters.filter(m => m.species?.toLowerCase().includes('elder dragon'))
+    };
+
+    const container = document.querySelector('.monsters-section');
+    container.innerHTML = '';
+
+    // Create sections for each type
+    const types = [
+        { key: 'small', title: 'Small Monsters', class: 'small-monster' },
+        { key: 'large', title: 'Large Monsters', class: 'large-monster' },
+        { key: 'elder', title: 'Elder Dragons', class: 'elder-dragon' }
+    ];
+
+    types.forEach(type => {
+        if (monstersByType[type.key].length > 0) {
+            const section = document.createElement('div');
+            section.className = `monster-section ${type.key}-monsters-section`;
+            
+            section.innerHTML = `
+                <h2 class="monster-section-title">${type.title}</h2>
+                <div class="monsters-grid">
+                    ${monstersByType[type.key].map(monster => `
+                        <div class="monster-card ${type.class}">
+                            <div class="monster-image-container">
+                                <img src="${getMonsterImagePath(monster.name, 'monsters', type.key)}" 
+                                     alt="${monster.name}" 
+                                     class="monster-image"
+                                     loading="lazy">
+                            </div>
+                            <div class="monster-header">
+                                <img src="${getMonsterImagePath(monster.name, 'icons', type.key)}" 
+                                     alt="${monster.name} icon" 
+                                     class="monster-icon">
+                                <h3>${monster.name}</h3>
+                            </div>
+                            <p class="monster-description">${monster.description || 'No description available.'}</p>
+                            <button class="view-details-btn" onclick="window.location.href='monster.html?monster=${encodeURIComponent(monster.name)}'">
+                                View Details
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+            
+            container.appendChild(section);
+        }
+    });
 }

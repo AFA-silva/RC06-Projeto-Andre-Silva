@@ -1,0 +1,400 @@
+/* Location Page Base Styles */
+.location-page {
+    background: url('Images/bg-image-index.png') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+}
+
+/* Animations */
+@keyframes fadeSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+}
+
+/* Header Styles */
+.location-header {
+    background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.8),
+        rgba(0, 0, 0, 0.6),
+        rgba(0, 0, 0, 0.8)
+    );
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.location-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 215, 0, 0.5),
+        transparent
+    );
+}
+
+.location-header h1 {
+    font-size: 3.5rem;
+    color: #fff;
+    text-shadow: 
+        0 0 10px rgba(255, 215, 0, 0.3),
+        2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin: 0;
+    animation: fadeSlideUp 0.8s ease-out;
+    font-family: 'Arial', sans-serif;
+    letter-spacing: 2px;
+}
+
+/* Hero Section */
+.location-hero {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.location-image-container {
+    position: relative;
+    height: 500px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 
+        0 10px 20px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+    animation: fadeSlideUp 1s ease-out;
+}
+
+.location-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.location-image-container:hover .location-image {
+    transform: scale(1.05);
+}
+
+.location-description {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-top: -50px;
+    position: relative;
+    z-index: 1;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: fadeSlideUp 1.2s ease-out;
+}
+
+.location-description p {
+    color: #fff;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    margin: 0;
+    text-align: justify;
+}
+
+/* Monsters Section */
+.monsters-section {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 1rem;
+}
+
+.monsters-section h2 {
+    color: #fff;
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    animation: fadeSlideUp 1.4s ease-out;
+}
+
+.monsters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 1rem;
+}
+
+/* Location-specific Theme Classes */
+.ancient-forest-theme { background-color: rgba(34, 85, 34, 0.3); }
+.wildspire-waste-theme { background-color: rgba(153, 101, 21, 0.3); }
+.coral-highlands-theme { background-color: rgba(216, 87, 171, 0.3); }
+.rotten-vale-theme { background-color: rgba(83, 23, 23, 0.3); }
+.elders-recess-theme { background-color: rgba(116, 40, 40, 0.3); }
+.hoarfrost-reach-theme { background-color: rgba(41, 115, 115, 0.3); }
+
+/* Monster Type Sections */
+.monster-section {
+    margin: 2rem 0;
+    transition: all 0.5s ease;
+}
+
+.monster-section-title {
+    color: #fff;
+    font-size: 2rem;
+    text-align: left;
+    margin: 2rem 0;
+    padding-left: 1rem;
+    border-left: 4px solid;
+    animation: fadeSlideUp 1s ease-out;
+}
+
+/* Section-specific styling */
+.small-monsters-section .monster-section-title {
+    border-color: #6ab04c;
+    text-shadow: 0 0 10px rgba(106, 176, 76, 0.3);
+}
+
+.large-monsters-section .monster-section-title {
+    border-color: #e17055;
+    text-shadow: 0 0 10px rgba(225, 112, 85, 0.3);
+}
+
+.elder-dragons-section .monster-section-title {
+    border-color: #a55eea;
+    text-shadow: 0 0 10px rgba(165, 94, 234, 0.3);
+}
+
+/* Enhanced Monster Cards */
+.monster-card {
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1rem;
+    height: 100%;
+}
+
+/* Card variations by type */
+.small-monster {
+    border-left: 3px solid #6ab04c;
+    background: linear-gradient(145deg, rgba(0, 0, 0, 0.7), rgba(106, 176, 76, 0.1));
+}
+
+.large-monster {
+    border-left: 3px solid #e17055;
+    background: linear-gradient(145deg, rgba(0, 0, 0, 0.7), rgba(225, 112, 85, 0.1));
+}
+
+.elder-dragon {
+    border-left: 3px solid #a55eea;
+    background: linear-gradient(145deg, rgba(0, 0, 0, 0.7), rgba(165, 94, 234, 0.1));
+}
+
+/* Hover effects by type */
+.small-monster:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(106, 176, 76, 0.3);
+}
+
+.large-monster:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(225, 112, 85, 0.3);
+}
+
+.elder-dragon:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(165, 94, 234, 0.3);
+}
+
+/* Monster Image Container */
+.monster-image-container {
+    height: 180px;
+    overflow: hidden;
+    border-radius: 8px;
+    position: relative;
+}
+
+.monster-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.monster-card:hover .monster-image {
+    transform: scale(1.1);
+}
+
+/* Monster Header */
+.monster-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 1rem 0;
+}
+
+.monster-icon {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.monster-header h3 {
+    font-size: 1.2rem;
+    margin: 0;
+    color: #fff;
+}
+
+/* Updated View Details Button */
+.view-details-btn {
+    width: 100%;
+    padding: 0.8rem;
+    margin-top: 1rem;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Small Monster Button */
+.small-monster .view-details-btn {
+    background: linear-gradient(45deg, #4a9052, #65bd6e);
+    border: 1px solid rgba(106, 176, 76, 0.3);
+    box-shadow: 0 2px 10px rgba(74, 144, 82, 0.2);
+}
+
+.small-monster .view-details-btn:hover {
+    background: linear-gradient(45deg, #65bd6e, #4a9052);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(74, 144, 82, 0.4);
+}
+
+/* Large Monster Button */
+.large-monster .view-details-btn {
+    background: linear-gradient(45deg, #b8860b, #daa520);
+    border: 1px solid rgba(218, 165, 32, 0.3);
+    box-shadow: 0 2px 10px rgba(184, 134, 11, 0.2);
+}
+
+.large-monster .view-details-btn:hover {
+    background: linear-gradient(45deg, #daa520, #b8860b);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(184, 134, 11, 0.4);
+}
+
+/* Elder Dragon Button */
+.elder-dragon .view-details-btn {
+    background: linear-gradient(45deg, #8b00ff, #9932cc);
+    border: 1px solid rgba(139, 0, 255, 0.3);
+    box-shadow: 0 2px 10px rgba(139, 0, 255, 0.2);
+}
+
+.elder-dragon .view-details-btn:hover {
+    background: linear-gradient(45deg, #9932cc, #8b00ff);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(139, 0, 255, 0.4);
+}
+
+/* Shine effect for all buttons */
+.view-details-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: left 0.5s ease;
+}
+
+.view-details-btn:hover::before {
+    left: 100%;
+}
+
+.view-details-btn:active {
+    transform: translateY(0);
+}
+
+/* Section Transition Effects */
+.elder-dragons-section:hover ~ .location-page {
+    background-color: rgba(165, 94, 234, 0.1);
+}
+
+.large-monsters-section:hover ~ .location-page {
+    background-color: rgba(225, 112, 85, 0.1);
+}
+
+.small-monsters-section:hover ~ .location-page {
+    background-color: rgba(106, 176, 76, 0.1);
+}
+
+/* Monster Description */
+.monster-description {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin: 1rem 0;
+    color: #eee;
+}
+
+/* Loading Animation */
+.loading {
+    height: 3px;
+    width: 100%;
+    background: linear-gradient(
+        to right,
+        transparent,
+        rgba(255, 215, 0, 0.5),
+        transparent
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite linear;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .location-header h1 { font-size: 3rem; }
+    .location-image-container { height: 400px; }
+}
+
+@media (max-width: 768px) {
+    .location-header h1 { font-size: 2.5rem; }
+    .location-image-container { height: 300px; }
+    .location-description { margin-top: -30px; }
+    .monsters-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+    .monster-image-container { height: 100px; }
+}
+
+@media (max-width: 480px) {
+    .location-header h1 { font-size: 2rem; }
+    .location-image-container { height: 250px; }
+    .location-description { 
+        margin-top: -20px;
+        padding: 1.5rem; 
+    }
+    .monsters-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
+    .monster-header h3 { font-size: 0.8rem; }
+} 
