@@ -389,4 +389,190 @@ body {
 .monster-species {
     color: #bbb;
     font-style: italic;
+}
+
+/* Elder Dragons Page Enhanced Styling */
+body.elder-dragons-page {
+    background: url('Images/bg-image-index.png') no-repeat center center fixed;
+    background-size: cover;
+    background-blend-mode: color-burn;
+    background-color: rgba(40, 0, 60, 0.8);
+    animation: elderBackgroundPulse 15s infinite;
+}
+
+@keyframes elderBackgroundPulse {
+    0%, 100% { background-color: rgba(40, 0, 60, 0.8); }
+    50% { background-color: rgba(60, 0, 90, 0.8); }
+}
+
+/* Enhanced Header */
+.elder-dragons-page .category-header {
+    background: linear-gradient(90deg, 
+        rgba(102, 0, 204, 0.9),
+        rgba(147, 0, 255, 0.8),
+        rgba(102, 0, 204, 0.9)
+    );
+    border-bottom: 2px solid rgba(180, 120, 255, 0.3);
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.elder-dragons-page .category-header::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    animation: elderShimmer 5s infinite;
+}
+
+@keyframes elderShimmer {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(50%); }
+}
+
+/* Enhanced Title */
+.elder-dragons-page .category-header h1 {
+    font-family: 'Cinzel Decorative', 'Cinzel', serif;
+    font-size: 2.8em;
+    color: #e6ccff;
+    text-shadow: 2px 2px 8px rgba(147, 0, 255, 0.5),
+                 -2px -2px 8px rgba(102, 0, 204, 0.5);
+    margin: 0;
+    position: relative;
+    z-index: 1;
+    animation: elderTitlePulse 3s infinite;
+}
+
+@keyframes elderTitlePulse {
+    0%, 100% { text-shadow: 2px 2px 8px rgba(147, 0, 255, 0.5); }
+    50% { text-shadow: 2px 2px 15px rgba(180, 120, 255, 0.8); }
+}
+
+/* Enhanced Description */
+.elder-dragons-page .category-description {
+    background: rgba(102, 0, 204, 0.2);
+    border: 1px solid rgba(147, 0, 255, 0.3);
+    border-radius: 15px;
+    padding: 20px;
+    margin: 30px auto;
+    max-width: 800px;
+    backdrop-filter: blur(10px);
+    transform: translateY(-10px);
+    animation: elderDescriptionFade 1s ease-out forwards;
+}
+
+@keyframes elderDescriptionFade {
+    from { 
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to { 
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.elder-dragons-page .category-description p {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2em;
+    color: #e6ccff;
+    line-height: 1.6;
+    margin: 0;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Enhanced Monster Cards */
+.elder-dragons-page .monster-card {
+    background: rgba(30, 0, 40, 0.85);
+    border: 1px solid rgba(147, 0, 255, 0.3);
+    border-radius: 15px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    animation: elderCardEntrance 0.8s ease-out forwards;
+    backdrop-filter: blur(10px);
+}
+
+.elder-dragons-page .monster-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    border-color: rgba(180, 120, 255, 0.6);
+    box-shadow: 0 10px 30px rgba(147, 0, 255, 0.3);
+}
+
+@keyframes elderCardEntrance {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Enhanced Back Button */
+.elder-dragons-page .back-button {
+    background: rgba(102, 0, 204, 0.7);
+    color: #e6ccff;
+    border: 1px solid rgba(180, 120, 255, 0.5);
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    margin: 10px;
+    z-index: 2;
+}
+
+.elder-dragons-page .back-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.elder-dragons-page .back-button:hover::before {
+    left: 100%;
+}
+
+.elder-dragons-page .back-button:hover {
+    background: rgba(147, 0, 255, 0.8);
+    transform: translateX(-5px);
+    box-shadow: -3px 3px 15px rgba(147, 0, 255, 0.4);
+}
+
+/* Loading State */
+.elder-dragons-page .loading {
+    color: #e6ccff;
+    font-family: 'Cinzel', serif;
+    font-size: 1.4em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    animation: elderLoadingPulse 2s infinite;
+}
+
+@keyframes elderLoadingPulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 0.3; }
 } 

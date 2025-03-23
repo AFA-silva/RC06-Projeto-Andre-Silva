@@ -110,13 +110,15 @@ function handleImageLoad(img) {
  * @returns {string} Caminho da imagem
  */
 function getMonsterImagePath(monsterName, type, category) {
-    // Remove espaços e caracteres especiais, converte para minúsculas
+    // First, handle spaces and special characters
     const formattedName = monsterName.toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^a-z0-9-]/g, '');
+        .replace(/\s+/g, '-')  // Replace spaces with hyphens
+        .replace(/[^a-z0-9-]/g, '') // Remove special characters
+        .replace(/-+/g, '-');  // Replace multiple hyphens with single hyphen
     
-    // Special cases mapping for monsters with different image names
+    // Special cases mapping for monsters with spaces and special names
     const specialCases = {
+        // Small Monsters
         'gajalaka': 'gajalaka',
         'vespoid': 'vespoid',
         'hornetaur': 'hornetaur',
@@ -132,18 +134,62 @@ function getMonsterImagePath(monsterName, type, category) {
         'apceros': 'apceros',
         'aptonoth': 'aptonoth',
         'kelbi': 'kelbi',
-        // Add any other small monsters that need special handling
+
+        // Large Monsters
+        'anjanath': 'anjanath',
+        'azure-rathalos': 'azure-rathalos',
+        'barroth': 'barroth',
+        'black-diablos': 'black-diablos',
+        'diablos': 'diablos',
+        'dodogama': 'dodogama',
+        'great-girros': 'great-girros',
+        'great-jagras': 'great-jagras',
+        'jyuratodus': 'jyuratodus',
+        'kulu-ya-ku': 'kulu-ya-ku',
+        'paolumu': 'paolumu',
+        'pukei-pukei': 'pukei-pukei',
+        'radobaan': 'radobaan',
+        'rathalos': 'rathalos',
+        'rathian': 'rathian',
+        'pink-rathian': 'pink-rathian',
+        'tobi-kadachi': 'tobi-kadachi',
+        'tzitzi-ya-ku': 'tzitzi-ya-ku',
+        'uragaan': 'uragaan',
+        'odogaron': 'odogaron',
+        'legiana': 'legiana',
+        'deviljho': 'deviljho',
+        'bazelgeuse': 'bazelgeuse',
+        'lavasioth': 'lavasioth',
+
+        // Elder Dragons with spaces and special names
+        'kushala-daora': 'kushala-daora',
+        'kulve-taroth': 'kulve-taroth',
+        'vaal-hazak': 'vaal-hazak',
+        'xeno-jiiva': 'xenojiiva',
+        'zorah-magdaros': 'zorah-magdaros',
+        'nergigante': 'nergigante',
+        'teostra': 'teostra',
+        'lunastra': 'lunastra',
+        'kirin': 'kirin',
+        'namielle': 'namielle',
+        'velkhana': 'velkhana',
+
+        // Elder Dragons with special characters
+        'safi-jiiva': 'safijiiva',
+        'safijiiva': 'safijiiva',
     };
 
-    // Use special case name if it exists
+    // Use special case name if it exists, otherwise use formatted name
     const finalName = specialCases[formattedName] || formattedName;
     
     // Define o caminho base dependendo da categoria
     let basePath = '';
     if (category === 'small') {
         basePath = type === 'monsters' ? 'monsters/small' : 'icons/small';
+    } else if (category === 'elder') {
+        basePath = type === 'monsters' ? 'monsters/elder' : 'icons/elder';  // Updated path for elder
     } else {
-        basePath = type === 'monsters' ? 'monsters' : 'icons';
+        basePath = type === 'monsters' ? 'monsters/large' : 'icons/large';  // Updated path for large
     }
 
     // Log the final path for debugging
@@ -534,34 +580,63 @@ function updateMonsterList(elementId, items) {
     const element = document.getElementById(elementId);
     if (!element) return;
 
-    if (!items || items.length === 0) {
-        const sectionTitle = elementId.replace('monster', '').toLowerCase();
-        element.innerHTML = `<li>No ${sectionTitle} available</li>`;
-        return;
-    }
-
     switch(elementId) {
         case "monsterAilments":
-            element.innerHTML = items.map(a => 
-                `<li>${a.name}: ${a.description || 'No description available'}</li>`
-            ).join('');
-            break;
-        case "monsterResistances":
-            element.innerHTML = items.map(r => 
-                `<li>${r.element} ${r.stars ? '★'.repeat(r.stars) : 'No resistance data'}</li>`
-            ).join('');
-            break;
-        case "monsterWeaknesses":
-            const weaknesses = items.filter(w => w.stars >= 2);
-            if (weaknesses.length === 0) {
-                element.innerHTML = '<li>No weaknesses available</li>';
-            } else {
-                element.innerHTML = weaknesses.map(w => 
-                    `<li>${w.element} ★${w.stars}</li>`
-                ).join('');
+            if (!items || items.length === 0) {
+                element.innerHTML = '<li>No ailments available</li>';
+                return;
             }
+            const sortedAilments = items.sort((a, b) => {
+                const starsA = a.stars || 0;
+                const starsB = b.stars || 0;
+                return starsB - starsA;
+            });
+            const topAilments = sortedAilments.slice(0, 5);
+            element.innerHTML = topAilments.map(a => 
+                `<li>${a.name}${a.stars ? ` ★${a.stars}` : ''}: ${a.description || 'No description available'}</li>`
+            ).join('');
             break;
+
+        case "monsterResistances":
+            if (!items || items.length === 0) {
+                element.innerHTML = '<li>None available</li>';
+                return;
+            }
+            // Show all resistances, even those without stars
+            const resistancesList = items.map(r => {
+                if (r.stars && r.stars > 0) {
+                    return `<li>${r.element} ${r.stars ? '★'.repeat(r.stars) : ''}</li>`;
+                } else {
+                    // For resistances without stars, just show the element
+                    return `<li>${r.element} (Resistant)</li>`;
+                }
+            });
+            element.innerHTML = resistancesList.join('');
+            break;
+
+        case "monsterWeaknesses":
+            if (!items || items.length === 0) {
+                element.innerHTML = '<li>No weaknesses available</li>';
+                return;
+            }
+            const validWeaknesses = items.filter(w => w.stars >= 2);
+            if (validWeaknesses.length === 0) {
+                element.innerHTML = '<li>No significant weaknesses available</li>';
+                return;
+            }
+            const sortedWeaknesses = validWeaknesses
+                .sort((a, b) => b.stars - a.stars)
+                .slice(0, 5);
+            element.innerHTML = sortedWeaknesses.map(w => 
+                `<li>${w.element} ★${w.stars}</li>`
+            ).join('');
+            break;
+
         case "monsterHabitats":
+            if (!items || items.length === 0) {
+                element.innerHTML = '<li>No habitats available</li>';
+                return;
+            }
             element.innerHTML = items.map(l => 
                 `<li>${l.name}</li>`
             ).join('');
