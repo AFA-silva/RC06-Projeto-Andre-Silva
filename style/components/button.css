@@ -1,0 +1,34 @@
+.button-monster {
+    background: var(--elder-gradient);
+    color: var(--text-color);
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease-in-out;
+    box-shadow: 0 4px 10px var(--shadow-color);
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.button-monster:hover {
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 6px 15px var(--shadow-color);
+}
+
+.button-monster:active {
+    transform: translateY(-50%) scale(0.95);
+}
+
+@keyframes buttonPulse {
+    0%, 100% { box-shadow: 0 4px 10px var(--shadow-color); }
+    50% { box-shadow: 0 6px 15px var(--shadow-color); }
+}
+
+.button-monster.animated {
+    animation: buttonPulse 2s infinite;
+}

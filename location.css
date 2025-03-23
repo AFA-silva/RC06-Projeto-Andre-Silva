@@ -34,6 +34,9 @@
     position: relative;
     overflow: hidden;
     border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .location-header::before {
@@ -178,84 +181,130 @@
 /* Enhanced Monster Cards */
 .monster-card {
     background: rgba(0, 0, 0, 0.7);
-    border-radius: 12px;
+    border-radius: var(--card-border-radius);
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     padding: 1rem;
-    height: 100%;
 }
 
 /* Card variations by type */
 .small-monster {
-    border-left: 3px solid #6ab04c;
-    background: linear-gradient(145deg, rgba(0, 0, 0, 0.7), rgba(106, 176, 76, 0.1));
+    border: 2px solid var(--small-color);
+    box-shadow: 0 0 15px rgba(74, 144, 82, 0.2);
 }
 
 .large-monster {
-    border-left: 3px solid #e17055;
-    background: linear-gradient(145deg, rgba(0, 0, 0, 0.7), rgba(225, 112, 85, 0.1));
+    border: 2px solid var(--large-color);
+    box-shadow: 0 0 15px rgba(184, 134, 11, 0.2);
 }
 
 .elder-dragon {
-    border-left: 3px solid #a55eea;
-    background: linear-gradient(145deg, rgba(0, 0, 0, 0.7), rgba(165, 94, 234, 0.1));
+    border: 2px solid var(--elder-color);
+    box-shadow: 0 0 15px rgba(139, 0, 255, 0.2);
 }
 
 /* Hover effects by type */
 .small-monster:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(106, 176, 76, 0.3);
+    box-shadow: 0 8px 25px rgba(74, 144, 82, 0.3);
 }
 
 .large-monster:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(225, 112, 85, 0.3);
+    box-shadow: 0 8px 25px rgba(184, 134, 11, 0.3);
 }
 
 .elder-dragon:hover {
     transform: translateY(-5px);
-    box-shadow: 0 5px 15px rgba(165, 94, 234, 0.3);
+    box-shadow: 0 8px 25px rgba(139, 0, 255, 0.3);
 }
 
 /* Monster Image Container */
 .monster-image-container {
-    height: 180px;
-    overflow: hidden;
-    border-radius: 8px;
     position: relative;
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: var(--card-border-radius);
+    margin-bottom: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .monster-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.3s ease;
+}
+
+.monster-image.loaded {
+    opacity: 1;
 }
 
 .monster-card:hover .monster-image {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
-/* Monster Header */
-.monster-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin: 1rem 0;
-}
-
-.monster-icon {
-    width: 40px;
-    height: 40px;
-    object-fit: cover;
-    border-radius: 6px;
-}
-
-.monster-header h3 {
-    font-size: 1.2rem;
+/* Titles and text */
+.monster-card h3 {
+    font-size: 1.5em;
     margin: 0;
     color: #fff;
+    text-shadow: var(--text-shadow);
+    flex-grow: 1;
+    padding-left: 10px;
+    text-align: left;
+}
+
+.monster-description {
+    font-size: 0.9em;
+    color: #ddd;
+    margin: 15px 0;
+    line-height: 1.4;
+    max-height: 80px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    text-align: left;
+}
+
+/* Badges and info */
+.monster-type-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    color: white;
+    text-shadow: var(--text-shadow);
+    z-index: 1;
+    backdrop-filter: blur(5px);
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.small-monster .monster-type-badge {
+    background: var(--small-color);
+}
+
+.large-monster .monster-type-badge {
+    background: var(--large-color);
+}
+
+.elder-dragon .monster-type-badge {
+    background: var(--elder-color);
 }
 
 /* Updated View Details Button */
@@ -264,11 +313,11 @@
     padding: 0.8rem;
     margin-top: 1rem;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     color: white;
     font-size: 1rem;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all var(--transition-speed) ease;
     text-transform: uppercase;
     letter-spacing: 1px;
     position: relative;
@@ -352,14 +401,6 @@
     background-color: rgba(106, 176, 76, 0.1);
 }
 
-/* Monster Description */
-.monster-description {
-    font-size: 0.95rem;
-    line-height: 1.6;
-    margin: 1rem 0;
-    color: #eee;
-}
-
 /* Loading Animation */
 .loading {
     height: 3px;
@@ -397,4 +438,21 @@
     }
     .monsters-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
     .monster-header h3 { font-size: 0.8rem; }
-} 
+}
+
+/* Back Button */
+.back-button {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    z-index: 10;
+}

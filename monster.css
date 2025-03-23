@@ -1,33 +1,11 @@
 /* Base styles */
 :root {
-    --primary-color: #b8860b;
-    --secondary-color: #daa520;
-    --background-color: rgba(50, 25, 10, 0.7);
-    --card-bg: rgba(0, 0, 0, 0.85);
-    --text-color: #fff;
-    --text-secondary: #ddd;
-    --border-color: rgba(255, 255, 255, 0.1);
-    --shadow-color: rgba(0, 0, 0, 0.3);
-    --transition-speed: 0.3s;
-    --small-color: #4a9052;
-    --large-color: #b8860b;
-    --elder-color: #8b00ff;
-    --header-gradient: linear-gradient(270deg, rgba(218, 165, 32, 0.6), rgba(139, 69, 19, 0.6), rgba(218, 165, 32, 0.6));
-    
-    /* Small monster theme */
-    --small-primary: #4a9052;
-    --small-secondary: #65bd6e;
-    --small-gradient: linear-gradient(270deg, rgba(74, 144, 82, 0.4), rgba(50, 100, 56, 0.4), rgba(74, 144, 82, 0.4));
-    
-    /* Large monster theme */
-    --large-primary: #b8860b;
-    --large-secondary: #daa520;
-    --large-gradient: linear-gradient(270deg, rgba(218, 165, 32, 0.4), rgba(139, 69, 19, 0.4), rgba(218, 165, 32, 0.4));
-    
-    /* Elder dragon theme */
-    --elder-primary: #8b00ff;
-    --elder-secondary: #9932cc;
-    --elder-gradient: linear-gradient(270deg, rgba(139, 0, 255, 0.4), rgba(102, 0, 187, 0.4), rgba(139, 0, 255, 0.4));
+    --primary-font: 'Arial', sans-serif;
+    --secondary-font: 'Cinzel', serif;
+    --text-color: #e6ccff;
+    --bg-button: rgba(102, 0, 204, 0.7);
+    --border-button: rgba(180, 120, 255, 0.5);
+    --hover-bg: rgba(147, 0, 255, 0.8);
 }
 
 body {
@@ -45,36 +23,12 @@ body {
     position: relative;
 }
 
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
-    pointer-events: none;
-    animation: pulseBackground 8s ease-in-out infinite;
-}
-
-@keyframes pulseBackground {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 0.8; }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes gradientWave {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
 /* Header styles */
 .monster-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     padding: 10px;
     color: white;
     position: sticky;
@@ -93,29 +47,6 @@ body::before {
     justify-content: center;
 }
 
-.monster-title-container::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100px;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
-    animation: shimmer 2s infinite;
-}
-
-@keyframes slideIn {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
 .monster-icon {
     width: 40px;
     height: 40px;
@@ -127,17 +58,6 @@ body::before {
     animation: pulseIcon 2s infinite;
 }
 
-@keyframes pulseIcon {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-.monster-icon:hover {
-    transform: scale(1.1) rotate(5deg);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-}
-
 .monster-header h1 {
     margin: 0;
     font-size: 24px;
@@ -146,23 +66,45 @@ body::before {
 
 /* Navigation */
 .back-button {
-    background: rgba(0, 0, 0, 0.4);
-    color: white;
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
     text-decoration: none;
-    padding: 10px 20px;
+    padding: 12px 25px;
     border-radius: 8px;
     font-size: 14px;
-    transition: all 0.3s ease;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    letter-spacing: 1px;
     backdrop-filter: blur(5px);
-    font-family: 'Arial', sans-serif;
-    font-weight: bold;
-    letter-spacing: 0.5px;
+    z-index: 10;
+    transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    overflow: hidden;
 }
 
 .back-button:hover {
-    background: rgba(74, 144, 82, 0.6);
-    transform: translateX(-5px);
+    transform: translateY(-50%) translateX(-3px); /* Pequeno movimento horizontal */
+}
+
+.back-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transition: 0.4s ease-in-out;
+}
+
+.back-button:hover::before {
+    left: 100%;
 }
 
 /* Main content */
@@ -183,17 +125,6 @@ body::before {
     margin-left: auto;
     margin-right: auto;
     animation: fadeInUp 1s ease-out;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 .monster-image-container {
@@ -259,34 +190,6 @@ body::before {
     animation: fadeInUp 0.6s ease-out backwards;
 }
 
-.info-section:nth-child(1) { animation-delay: 0.2s; }
-.info-section:nth-child(2) { animation-delay: 0.4s; }
-.info-section:nth-child(3) { animation-delay: 0.6s; }
-.info-section:nth-child(4) { animation-delay: 0.8s; }
-.info-section:nth-child(5) { animation-delay: 1s; }
-.info-section:nth-child(6) { animation-delay: 1.2s; }
-
-.info-section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-    transform: translateX(-100%);
-    transition: transform 0.6s ease;
-}
-
-.info-section:hover::before {
-    transform: translateX(100%);
-}
-
-.info-section:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-}
-
 .info-section h2 {
     color: var(--primary-color);
     margin-top: 0;
@@ -295,23 +198,6 @@ body::before {
     text-shadow: 1px 1px 2px var(--shadow-color);
     position: relative;
     display: inline-block;
-}
-
-.info-section h2::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 100%;
-    height: 2px;
-    background: linear-gradient(90deg, var(--primary-color), transparent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.3s ease;
-}
-
-.info-section:hover h2::after {
-    transform: scaleX(1);
 }
 
 .info-content {
@@ -492,21 +378,37 @@ body::before {
     100% { opacity: 0.7; }
 }
 
-/* Small Monster Theme - Complete Overhaul */
-.monster-small {
+/* Base Theme Styles - Shared across all types */
+.monster-small,
+.monster-large,
+.monster-elder {
     background: url('Images/bg-image-index.png') no-repeat center center fixed;
     background-size: cover;
     background-blend-mode: soft-light;
+}
+
+/* Color Schemes */
+.monster-small {
     background-color: rgba(40, 70, 40, 0.8);
-    animation: naturePulse 15s infinite;
+    animation: themePulse 15s infinite;
 }
 
-@keyframes naturePulse {
-    0%, 100% { background-color: rgba(40, 70, 40, 0.8); }
-    50% { background-color: rgba(50, 90, 50, 0.8); }
+.monster-large {
+    background-color: rgba(70, 50, 0, 0.8);
+    animation: themePulse 15s infinite;
 }
 
-/* Header Overhaul */
+.monster-elder {
+    background-color: rgba(40, 0, 60, 0.8);
+    animation: themePulse 15s infinite;
+}
+
+@keyframes themePulse {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.2); }
+}
+
+/* Header Styles */
 .monster-small .monster-header {
     background: linear-gradient(90deg, 
         rgba(39, 89, 44, 0.9),
@@ -514,247 +416,6 @@ body::before {
         rgba(39, 89, 44, 0.9)
     );
     border-bottom: 2px solid rgba(120, 200, 120, 0.3);
-    box-shadow: 0 2px 20px rgba(74, 144, 82, 0.3);
-    animation: headerGlow 3s infinite;
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    position: relative;
-}
-
-@keyframes headerGlow {
-    0%, 100% { box-shadow: 0 2px 20px rgba(74, 144, 82, 0.3); }
-    50% { box-shadow: 0 2px 30px rgba(74, 144, 82, 0.5); }
-}
-
-/* Monster Title Container */
-.monster-title-container {
-    flex: 1;
-    text-align: center;
-    margin: 0 auto;
-}
-
-/* Back Button Positioning */
-.monster-small .back-button {
-    background: rgba(39, 89, 44, 0.7);
-    color: #d4ffda;
-    border: 1px solid rgba(120, 200, 120, 0.5);
-    padding: 12px 25px;
-    font-family: 'Segoe UI', sans-serif;
-    font-weight: 500;
-    letter-spacing: 1px;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.4s ease;
-    margin-right: auto;
-    z-index: 2;
-}
-
-.monster-small .back-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.2),
-        transparent
-    );
-    transition: 0.5s;
-}
-
-.monster-small .back-button:hover::before {
-    left: 100%;
-}
-
-.monster-small .back-button:hover {
-    background: rgba(74, 144, 82, 0.8);
-    transform: translateX(-5px);
-    box-shadow: -3px 3px 10px rgba(74, 144, 82, 0.4);
-}
-
-/* Monster Card Overhaul */
-.monster-small .info-section {
-    background: rgba(20, 40, 20, 0.85);
-    border: 1px solid rgba(120, 200, 120, 0.3);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    transform-origin: center;
-    animation: cardEntrance 0.8s ease-out forwards;
-    backdrop-filter: blur(10px);
-}
-
-@keyframes cardEntrance {
-    from {
-        opacity: 0;
-        transform: translateY(30px) scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-.monster-small .info-section:hover {
-    border-color: rgba(120, 200, 120, 0.6);
-    transform: translateY(-8px);
-    box-shadow: 0 8px 25px rgba(74, 144, 82, 0.3);
-}
-
-/* Typography Enhancements */
-.monster-small h1 {
-    font-family: 'Trebuchet MS', sans-serif;
-    color: #e8ffe8;
-    font-size: 2.2em;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
-    animation: titleGlow 3s infinite;
-}
-
-@keyframes titleGlow {
-    0%, 100% { text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); }
-    50% { text-shadow: 2px 2px 12px rgba(74, 144, 82, 0.7); }
-}
-
-.monster-small .info-section h2 {
-    color: #90EE90;
-    font-family: 'Segoe UI', sans-serif;
-    font-size: 1.5em;
-    letter-spacing: 1px;
-    position: relative;
-    padding-bottom: 10px;
-}
-
-.monster-small .info-section h2::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 50px;
-    height: 2px;
-    background: linear-gradient(90deg, #90EE90, transparent);
-    animation: lineExtend 0.3s ease-out forwards;
-}
-
-@keyframes lineExtend {
-    from { width: 0; }
-    to { width: 50px; }
-}
-
-/* Content Styling */
-.monster-small .monster-description {
-    color: #c5e6c9;
-    font-family: 'Segoe UI', sans-serif;
-    line-height: 1.8;
-    font-size: 1.1em;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-.monster-small .info-row {
-    background: rgba(39, 89, 44, 0.3);
-    border: 1px solid rgba(120, 200, 120, 0.2);
-    border-radius: 8px;
-    padding: 15px;
-    margin: 10px 0;
-    transition: all 0.3s ease;
-}
-
-.monster-small .info-row:hover {
-    background: rgba(39, 89, 44, 0.4);
-    border-color: rgba(120, 200, 120, 0.4);
-    transform: translateX(10px);
-}
-
-/* List Styling */
-.monster-small .element-list li,
-.monster-small .ailment-list li,
-.monster-small .habitat-list li {
-    background: rgba(39, 89, 44, 0.3);
-    border: 1px solid rgba(120, 200, 120, 0.2);
-    border-radius: 8px;
-    padding: 12px 20px;
-    margin: 8px 0;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.monster-small .element-list li::before,
-.monster-small .ailment-list li::before,
-.monster-small .habitat-list li::before {
-    content: '•';
-    color: #90EE90;
-    position: absolute;
-    left: 8px;
-    animation: bulletPulse 2s infinite;
-}
-
-@keyframes bulletPulse {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
-}
-
-/* Monster Image Container */
-.monster-small .monster-image-container {
-    position: relative;
-    overflow: hidden;
-    border-radius: 12px;
-    border: 2px solid rgba(120, 200, 120, 0.3);
-    transition: all 0.4s ease;
-}
-
-.monster-small .monster-image-container::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(
-        45deg,
-        rgba(74, 144, 82, 0.2),
-        transparent,
-        rgba(74, 144, 82, 0.2)
-    );
-    animation: gradientMove 3s infinite;
-}
-
-@keyframes gradientMove {
-    0% { background-position: 0% 0%; }
-    50% { background-position: 100% 100%; }
-    100% { background-position: 0% 0%; }
-}
-
-/* Monster Type Badge */
-.monster-small .monster-type-badge {
-    background: rgba(39, 89, 44, 0.8);
-    color: #e8ffe8;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    border: 1px solid rgba(120, 200, 120, 0.4);
-    animation: badgePulse 3s infinite;
-}
-
-@keyframes badgePulse {
-    0%, 100% { box-shadow: 0 0 10px rgba(74, 144, 82, 0.3); }
-    50% { box-shadow: 0 0 20px rgba(74, 144, 82, 0.5); }
-}
-
-/* Large Monster Theme */
-.monster-large {
-    background: url('Images/bg-image-index.png') no-repeat center center fixed;
-    background-size: cover;
-    background-blend-mode: overlay;
-    background-color: rgba(50, 30, 0, 0.8);
-    animation: firePulse 15s infinite;
-}
-
-@keyframes firePulse {
-    0%, 100% { background-color: rgba(50, 30, 0, 0.8); }
-    50% { background-color: rgba(70, 40, 0, 0.8); }
 }
 
 .monster-large .monster-header {
@@ -764,43 +425,8 @@ body::before {
         rgba(184, 134, 11, 0.9)
     );
     border-bottom: 2px solid rgba(255, 215, 0, 0.3);
-    box-shadow: 0 2px 20px rgba(218, 165, 32, 0.3);
-    animation: headerGlowGold 3s infinite;
 }
 
-@keyframes headerGlowGold {
-    0%, 100% { box-shadow: 0 2px 20px rgba(218, 165, 32, 0.3); }
-    50% { box-shadow: 0 2px 30px rgba(255, 215, 0, 0.5); }
-}
-
-.monster-large .info-section {
-    background: rgba(40, 30, 0, 0.85);
-    border: 1px solid rgba(218, 165, 32, 0.3);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    animation: cardEntranceGold 0.8s ease-out forwards;
-}
-
-@keyframes cardEntranceGold {
-    from {
-        opacity: 0;
-        transform: translateY(30px) scale(0.95);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
-}
-
-/* Enhanced Elder Dragon Theme */
-.monster-elder {
-    background: url('Images/bg-image-index.png') no-repeat center center fixed;
-    background-size: cover;
-    background-blend-mode: color-burn;
-    background-color: rgba(40, 0, 60, 0.8);
-    animation: mysticPulse 15s infinite;
-}
-
-/* Header styling for elder dragons */
 .monster-elder .monster-header {
     background: linear-gradient(90deg, 
         rgba(102, 0, 204, 0.9),
@@ -808,166 +434,124 @@ body::before {
         rgba(102, 0, 204, 0.9)
     );
     border-bottom: 2px solid rgba(180, 120, 255, 0.3);
-    box-shadow: 0 2px 20px rgba(147, 0, 255, 0.3);
-    animation: elderHeaderGlow 3s infinite;
 }
 
-@keyframes elderHeaderGlow {
-    0%, 100% { 
-        box-shadow: 0 2px 20px rgba(147, 0, 255, 0.3);
-        border-bottom-color: rgba(180, 120, 255, 0.3);
-    }
-    50% { 
-        box-shadow: 0 2px 30px rgba(180, 120, 255, 0.5);
-        border-bottom-color: rgba(180, 120, 255, 0.5);
-    }
+/* Back Button Colors */
+.monster-small .back-button {
+    background: rgba(39, 89, 44, 0.7);
+    border: 1px solid rgba(120, 200, 120, 0.5);
+    color: #d4ffda;
 }
 
-/* Enhanced back button for elder dragons */
+.monster-large .back-button {
+    background: rgba(184, 134, 11, 0.7);
+    border: 1px solid rgba(255, 215, 0, 0.5);
+    color: #fff8e6;
+}
+
 .monster-elder .back-button {
     background: rgba(102, 0, 204, 0.7);
-    color: #e6ccff;
     border: 1px solid rgba(180, 120, 255, 0.5);
-    padding: 12px 25px;
-    font-family: 'Cinzel', serif;
-    font-weight: 500;
-    letter-spacing: 1px;
-    position: relative;
-    overflow: hidden;
-    transition: all 0.4s ease;
-    text-transform: uppercase;
-    font-size: 0.9em;
-}
-
-.monster-elder .back-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.2),
-        transparent
-    );
-    transition: 0.5s;
-}
-
-.monster-elder .back-button:hover::before {
-    left: 100%;
-}
-
-.monster-elder .back-button:hover {
-    background: rgba(147, 0, 255, 0.8);
-    transform: translateX(-5px);
-    box-shadow: -3px 3px 15px rgba(147, 0, 255, 0.4);
-}
-
-/* Enhanced title styling for elder dragons */
-.monster-elder h1 {
-    font-family: 'Cinzel Decorative', 'Cinzel', serif;
     color: #e6ccff;
-    font-size: 2.4em;
-    text-shadow: 2px 2px 8px rgba(147, 0, 255, 0.5),
-                 -2px -2px 8px rgba(102, 0, 204, 0.5);
-    letter-spacing: 2px;
-    animation: elderTitleGlow 3s infinite;
 }
 
-@keyframes elderTitleGlow {
-    0%, 100% { 
-        text-shadow: 2px 2px 8px rgba(147, 0, 255, 0.5),
-                     -2px -2px 8px rgba(102, 0, 204, 0.5);
-    }
-    50% { 
-        text-shadow: 2px 2px 12px rgba(180, 120, 255, 0.7),
-                     -2px -2px 12px rgba(147, 0, 255, 0.7);
-    }
+/* Info Section Colors */
+.monster-small .info-section {
+    background: rgba(20, 40, 20, 0.85);
+    border: 1px solid rgba(120, 200, 120, 0.3);
 }
 
-/* Enhanced info sections for elder dragons */
+.monster-large .info-section {
+    background: rgba(40, 30, 0, 0.85);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
 .monster-elder .info-section {
     background: rgba(30, 0, 40, 0.85);
-    border: 1px solid rgba(147, 0, 255, 0.3);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(10px);
-    transition: all 0.4s ease;
+    border: 1px solid rgba(180, 120, 255, 0.3);
 }
 
-.monster-elder .info-section:hover {
-    border-color: rgba(180, 120, 255, 0.6);
-    transform: translateY(-8px);
-    box-shadow: 0 8px 25px rgba(147, 0, 255, 0.3);
+/* Heading Colors */
+.monster-small .info-section h2 {
+    color: #90EE90;
+}
+
+.monster-large .info-section h2 {
+    color: #FFD700;
 }
 
 .monster-elder .info-section h2 {
     color: #b380ff;
-    font-family: 'Cinzel', serif;
-    font-size: 1.6em;
-    letter-spacing: 1px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    position: relative;
-    padding-bottom: 15px;
-    margin-bottom: 20px;
 }
 
-.monster-elder .info-section h2::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 60px;
-    height: 2px;
-    background: linear-gradient(90deg, #b380ff, transparent);
-    animation: elderLineExtend 0.3s ease-out forwards;
+/* Info Row Colors */
+.monster-small .info-row {
+    background: rgba(39, 89, 44, 0.3);
+    border: 1px solid rgba(120, 200, 120, 0.2);
 }
 
-@keyframes elderLineExtend {
-    from { width: 0; }
-    to { width: 60px; }
+.monster-large .info-row {
+    background: rgba(184, 134, 11, 0.3);
+    border: 1px solid rgba(255, 215, 0, 0.2);
 }
 
-/* Enhanced list items for elder dragons */
+.monster-elder .info-row {
+    background: rgba(102, 0, 204, 0.3);
+    border: 1px solid rgba(180, 120, 255, 0.2);
+}
+
+/* List Item Colors */
+.monster-small .element-list li,
+.monster-small .ailment-list li,
+.monster-small .habitat-list li {
+    background: rgba(39, 89, 44, 0.3);
+    border: 1px solid rgba(120, 200, 120, 0.2);
+}
+
+.monster-large .element-list li,
+.monster-large .ailment-list li,
+.monster-large .habitat-list li {
+    background: rgba(184, 134, 11, 0.3);
+    border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
 .monster-elder .element-list li,
 .monster-elder .ailment-list li,
 .monster-elder .habitat-list li {
-    background: rgba(102, 0, 204, 0.2);
-    border: 1px solid rgba(147, 0, 255, 0.2);
-    border-radius: 8px;
-    padding: 12px 20px;
-    margin: 8px 0;
-    transition: all 0.3s ease;
-    position: relative;
-    overflow: hidden;
-}
-
-.monster-elder .element-list li:hover,
-.monster-elder .ailment-list li:hover,
-.monster-elder .habitat-list li:hover {
     background: rgba(102, 0, 204, 0.3);
-    border-color: rgba(147, 0, 255, 0.4);
-    transform: translateX(10px);
-    box-shadow: 0 2px 10px rgba(147, 0, 255, 0.2);
+    border: 1px solid rgba(180, 120, 255, 0.2);
 }
 
-/* Monster type badge for elder dragons */
+/* Monster Type Badge Colors */
+.monster-small .monster-type-badge {
+    background: rgba(39, 89, 44, 0.8);
+    border: 1px solid rgba(120, 200, 120, 0.4);
+    color: #e8ffe8;
+}
+
+.monster-large .monster-type-badge {
+    background: rgba(184, 134, 11, 0.8);
+    border: 1px solid rgba(255, 215, 0, 0.4);
+    color: #fff8e6;
+}
+
 .monster-elder .monster-type-badge {
     background: rgba(102, 0, 204, 0.8);
-    color: #e6ccff;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-weight: bold;
-    letter-spacing: 1px;
     border: 1px solid rgba(180, 120, 255, 0.4);
-    animation: elderBadgePulse 3s infinite;
-    font-family: 'Cinzel', serif;
-    text-transform: uppercase;
-    font-size: 0.9em;
+    color: #e6ccff;
 }
 
-@keyframes elderBadgePulse {
-    0%, 100% { box-shadow: 0 0 10px rgba(147, 0, 255, 0.3); }
-    50% { box-shadow: 0 0 20px rgba(180, 120, 255, 0.5); }
-}
+/* Hover Effects - Same for all, just different colors */
+.monster-small .info-section:hover { box-shadow: 0 8px 25px rgba(74, 144, 82, 0.3); }
+.monster-large .info-section:hover { box-shadow: 0 8px 25px rgba(218, 165, 32, 0.3); }
+.monster-elder .info-section:hover { box-shadow: 0 8px 25px rgba(147, 0, 255, 0.3); }
+
+/* Image Container Border Colors */
+.monster-small .monster-image-container { border: 2px solid rgba(120, 200, 120, 0.3); }
+.monster-large .monster-image-container { border: 2px solid rgba(255, 215, 0, 0.3); }
+.monster-elder .monster-image-container { border: 2px solid rgba(180, 120, 255, 0.3); }
+
+/* Title Text Colors and Effects */
+.monster-small h1 { color: #e8ffe8; }
+.monster-large h1 { color: #fff8e6; }
+.monster-elder h1 { color: #e6ccff; }
