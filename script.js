@@ -239,36 +239,33 @@ async function renderMonsterCard(monster, category) {
     });
 
     return `
-        <div class="monster-card ${category}-card" data-monster="${monster.name}">
-            ${getMonsterTypeBadge(monster)}
-            <div class="monster-card-content">
-                <div class="monster-header">
-                    <img src="${monsterIconPath}" 
-                         alt="${monster.name} icon" 
-                         class="monster-icon"
-                         onerror="this.src='Images/icon-placeholder.png'; console.log('Error loading icon:', this.src);"
-                         onload="this.classList.add('loaded')">
-                    <h3>${monster.name}</h3>
-                </div>
-                <div class="monster-image-container">
-                    <img src="${monsterImagePath}" 
-                         alt="${monster.name}" 
-                         class="monster-image"
-                         loading="lazy"
-                         onerror="this.src='Images/monster-placeholder.png'; console.log('Error loading image:', this.src);"
-                         onload="this.classList.add('loaded')">
-                </div>
-                <div class="monster-info">
-                    <span class="monster-type">${monster.type || 'Unknown'}</span>
-                    ${monster.species ? `<span class="monster-species">${monster.species}</span>` : ''}
-                </div>
-                <p class="monster-description">${monster.description || 'Information unavailable.'}</p>
-                <button class="view-details-btn" onclick="window.location.href='monster.html?monster=${encodeURIComponent(monster.name)}'">
-                    View Details
-                </button>
+    <div class="monster-card ${category}-card" data-monster="${monster.name}">
+        ${getMonsterTypeBadge(monster)}
+        <div class="monster-card-content">
+            <div class="monster-header">
+                <img src="${monsterIconPath}" 
+                     alt="${monster.name} icon" 
+                     class="monster-icon"
+                     onerror="this.src='Images/icon-placeholder.png'; console.log('Error loading icon:', this.src);"
+                     onload="this.classList.add('loaded')">
+                <h3>${monster.name}</h3>
             </div>
+            <div class="monster-image-container">
+                <img src="${monsterImagePath}" 
+                     alt="${monster.name}" 
+                     class="monster-image"
+                     loading="lazy"
+                     onerror="this.src='Images/monster-placeholder.png'; console.log('Error loading image:', this.src);"
+                     onload="this.classList.add('loaded')">
+            </div>
+            <div class="monster-info">
+                <span class="monster-type">${monster.type || 'Unknown'}</span>
+                ${monster.species ? `<span class="monster-species">${monster.species}</span>` : ''}
+            </div>
+            <p class="monster-description">${monster.description || 'Information unavailable.'}</p>
         </div>
-    `;
+    </div>
+`;
 }
 
 /**
