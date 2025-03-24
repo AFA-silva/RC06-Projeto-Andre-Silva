@@ -85,10 +85,9 @@
     opacity: 1;
 }
 
+/* Move location description below the image */
 .location-description {
-    flex: 1;
-    min-width: 300px;
-    max-width: 600px;
+    margin-top: 20px;
     padding: 20px;
     background: rgba(0, 30, 45, 0.85);
     border-radius: 15px;
