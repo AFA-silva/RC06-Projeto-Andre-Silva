@@ -1,12 +1,192 @@
-/* Location Page Base Styles */
+/* location.css - Styles for the location page */
+
+/* Base styles */
 .location-page {
     background: url('Images/bg-image-index.png') no-repeat center center fixed;
     background-size: cover;
+    background-blend-mode: multiply;
+    background-color: rgba(0, 40, 60, 0.8);
+    font-family: Arial, sans-serif;
+    color: #e6f7ff;
+    margin: 0;
+    padding: 0;
     min-height: 100vh;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+/* Header styles */
+.location-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(90deg, 
+        rgba(0, 60, 90, 0.9),
+        rgba(0, 120, 180, 0.8),
+        rgba(0, 60, 90, 0.9)
+    );
+    border-bottom: 2px solid rgba(100, 200, 255, 0.3);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.location-header h1 {
+    margin: 0;
+    font-size: 2.2em;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    color: #e6f7ff;
+    animation: slideIn 0.8s ease-out;
+}
+
+/* Hero section */
+.location-hero {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+    animation: fadeInUp 1s ease-out;
+}
+
+.location-image-container {
+    flex: 1;
+    min-width: 300px;
+    max-width: 600px;
+    height: 400px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    border: 2px solid rgba(100, 200, 255, 0.3);
+    background: rgba(0, 0, 0, 0.3);
+    transition: transform 0.4s ease;
+}
+
+.location-image-container:hover {
+    transform: scale(1.02);
+}
+
+.location-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.5s ease;
+    opacity: 0;
+    filter: brightness(0.9);
+}
+
+.location-image:hover {
+    filter: brightness(1.1);
+}
+
+.location-image.loaded {
+    opacity: 1;
+}
+
+.location-description {
+    flex: 1;
+    min-width: 300px;
+    max-width: 600px;
+    padding: 20px;
+    background: rgba(0, 30, 45, 0.85);
+    border-radius: 15px;
+    border: 1px solid rgba(100, 200, 255, 0.3);
+    backdrop-filter: blur(5px);
+    line-height: 1.6;
+    text-align: justify;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.4s ease;
+}
+
+.location-description:hover {
+    box-shadow: 0 8px 25px rgba(100, 200, 255, 0.3);
+}
+
+/* Monsters section */
+.monsters-section {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    animation: fadeInUp 1s ease-out 0.2s backwards;
+}
+
+.monsters-section h2 {
+    color: #80d4ff;
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    text-align: center;
+}
+
+.monsters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 10px;
+}
+
+.monster-card {
+    background: rgba(0, 40, 60, 0.7);
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(100, 200, 255, 0.2);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.monster-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(100, 200, 255, 0.2);
+    background: rgba(0, 60, 90, 0.8);
+}
+
+.monster-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+    );
+    transition: 0.4s ease-in-out;
+}
+
+.monster-card:hover::before {
+    left: 100%;
+}
+
+.monster-card img {
+    width: 100%;
+    height: 120px;
+    object-fit: contain;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.monster-card h3 {
+    margin: 0;
+    color: #b3e6ff;
+    font-size: 1.1em;
 }
 
 /* Animations */
-@keyframes fadeSlideUp {
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
     from {
         opacity: 0;
         transform: translateY(20px);
@@ -17,442 +197,39 @@
     }
 }
 
-@keyframes shimmer {
-    0% { background-position: -1000px 0; }
-    100% { background-position: 1000px 0; }
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
-/* Header Styles */
-.location-header {
-    background: linear-gradient(
-        to right,
-        rgba(0, 0, 0, 0.8),
-        rgba(0, 0, 0, 0.6),
-        rgba(0, 0, 0, 0.8)
-    );
-    padding: 2rem;
-    position: relative;
-    overflow: hidden;
-    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.location-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 215, 0, 0.5),
-        transparent
-    );
-}
-
-.location-header h1 {
-    font-size: 3.5rem;
-    color: #fff;
-    text-shadow: 
-        0 0 10px rgba(255, 215, 0, 0.3),
-        2px 2px 4px rgba(0, 0, 0, 0.5);
-    margin: 0;
-    animation: fadeSlideUp 0.8s ease-out;
-    font-family: 'Arial', sans-serif;
-    letter-spacing: 2px;
-}
-
-/* Hero Section */
-.location-hero {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-}
-
-.location-image-container {
-    position: relative;
-    height: 500px;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 
-        0 10px 20px rgba(0, 0, 0, 0.4),
-        0 0 0 1px rgba(255, 255, 255, 0.1);
-    animation: fadeSlideUp 1s ease-out;
-}
-
-.location-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.5s ease;
-}
-
-.location-image-container:hover .location-image {
-    transform: scale(1.05);
-}
-
-.location-description {
-    background: rgba(0, 0, 0, 0.8);
-    border-radius: 10px;
-    padding: 2rem;
-    margin-top: -50px;
-    position: relative;
-    z-index: 1;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    animation: fadeSlideUp 1.2s ease-out;
-}
-
-.location-description p {
-    color: #fff;
-    font-size: 1.1rem;
-    line-height: 1.8;
-    margin: 0;
-    text-align: justify;
-}
-
-/* Monsters Section */
-.monsters-section {
-    max-width: 1200px;
-    margin: 4rem auto;
-    padding: 0 1rem;
-}
-
-.monsters-section h2 {
-    color: #fff;
-    font-size: 2.5rem;
-    text-align: center;
-    margin-bottom: 2rem;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    animation: fadeSlideUp 1.4s ease-out;
-}
-
-.monsters-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
-    padding: 1rem;
-}
-
-/* Location-specific Theme Classes */
-.ancient-forest-theme { background-color: rgba(34, 85, 34, 0.3); }
-.wildspire-waste-theme { background-color: rgba(153, 101, 21, 0.3); }
-.coral-highlands-theme { background-color: rgba(216, 87, 171, 0.3); }
-.rotten-vale-theme { background-color: rgba(83, 23, 23, 0.3); }
-.elders-recess-theme { background-color: rgba(116, 40, 40, 0.3); }
-.hoarfrost-reach-theme { background-color: rgba(41, 115, 115, 0.3); }
-
-/* Monster Type Sections */
-.monster-section {
-    margin: 2rem 0;
-    transition: all 0.5s ease;
-}
-
-.monster-section-title {
-    color: #fff;
-    font-size: 2rem;
-    text-align: left;
-    margin: 2rem 0;
-    padding-left: 1rem;
-    border-left: 4px solid;
-    animation: fadeSlideUp 1s ease-out;
-}
-
-/* Section-specific styling */
-.small-monsters-section .monster-section-title {
-    border-color: #6ab04c;
-    text-shadow: 0 0 10px rgba(106, 176, 76, 0.3);
-}
-
-.large-monsters-section .monster-section-title {
-    border-color: #e17055;
-    text-shadow: 0 0 10px rgba(225, 112, 85, 0.3);
-}
-
-.elder-dragons-section .monster-section-title {
-    border-color: #a55eea;
-    text-shadow: 0 0 10px rgba(165, 94, 234, 0.3);
-}
-
-/* Enhanced Monster Cards */
-.monster-card {
-    background: rgba(0, 0, 0, 0.7);
-    border-radius: var(--card-border-radius);
-    overflow: hidden;
-    transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 1rem;
-}
-
-/* Card variations by type */
-.small-monster {
-    border: 2px solid var(--small-color);
-    box-shadow: 0 0 15px rgba(74, 144, 82, 0.2);
-}
-
-.large-monster {
-    border: 2px solid var(--large-color);
-    box-shadow: 0 0 15px rgba(184, 134, 11, 0.2);
-}
-
-.elder-dragon {
-    border: 2px solid var(--elder-color);
-    box-shadow: 0 0 15px rgba(139, 0, 255, 0.2);
-}
-
-/* Hover effects by type */
-.small-monster:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(74, 144, 82, 0.3);
-}
-
-.large-monster:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(184, 134, 11, 0.3);
-}
-
-.elder-dragon:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(139, 0, 255, 0.3);
-}
-
-/* Monster Image Container */
-.monster-image-container {
-    position: relative;
-    width: 100%;
-    height: 200px;
-    overflow: hidden;
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: var(--card-border-radius);
-    margin-bottom: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.monster-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 0.5s ease, transform 0.3s ease;
-}
-
-.monster-image.loaded {
-    opacity: 1;
-}
-
-.monster-card:hover .monster-image {
-    transform: scale(1.05);
-}
-
-/* Titles and text */
-.monster-card h3 {
-    font-size: 1.5em;
-    margin: 0;
-    color: #fff;
-    text-shadow: var(--text-shadow);
-    flex-grow: 1;
-    padding-left: 10px;
-    text-align: left;
-}
-
-.monster-description {
-    font-size: 0.9em;
-    color: #ddd;
-    margin: 15px 0;
-    line-height: 1.4;
-    max-height: 80px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    text-align: left;
-}
-
-/* Badges and info */
-.monster-type-badge {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-size: 0.8em;
-    color: white;
-    text-shadow: var(--text-shadow);
-    z-index: 1;
-    backdrop-filter: blur(5px);
-    font-weight: bold;
-    letter-spacing: 0.5px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.small-monster .monster-type-badge {
-    background: var(--small-color);
-}
-
-.large-monster .monster-type-badge {
-    background: var(--large-color);
-}
-
-.elder-dragon .monster-type-badge {
-    background: var(--elder-color);
-}
-
-/* Updated View Details Button */
-.view-details-btn {
-    width: 100%;
-    padding: 0.8rem;
-    margin-top: 1rem;
-    border: none;
-    border-radius: 8px;
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: all var(--transition-speed) ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    position: relative;
-    overflow: hidden;
-}
-
-/* Small Monster Button */
-.small-monster .view-details-btn {
-    background: linear-gradient(45deg, #4a9052, #65bd6e);
-    border: 1px solid rgba(106, 176, 76, 0.3);
-    box-shadow: 0 2px 10px rgba(74, 144, 82, 0.2);
-}
-
-.small-monster .view-details-btn:hover {
-    background: linear-gradient(45deg, #65bd6e, #4a9052);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(74, 144, 82, 0.4);
-}
-
-/* Large Monster Button */
-.large-monster .view-details-btn {
-    background: linear-gradient(45deg, #b8860b, #daa520);
-    border: 1px solid rgba(218, 165, 32, 0.3);
-    box-shadow: 0 2px 10px rgba(184, 134, 11, 0.2);
-}
-
-.large-monster .view-details-btn:hover {
-    background: linear-gradient(45deg, #daa520, #b8860b);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(184, 134, 11, 0.4);
-}
-
-/* Elder Dragon Button */
-.elder-dragon .view-details-btn {
-    background: linear-gradient(45deg, #8b00ff, #9932cc);
-    border: 1px solid rgba(139, 0, 255, 0.3);
-    box-shadow: 0 2px 10px rgba(139, 0, 255, 0.2);
-}
-
-.elder-dragon .view-details-btn:hover {
-    background: linear-gradient(45deg, #9932cc, #8b00ff);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(139, 0, 255, 0.4);
-}
-
-/* Shine effect for all buttons */
-.view-details-btn::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.2),
-        transparent
-    );
-    transition: left 0.5s ease;
-}
-
-.view-details-btn:hover::before {
-    left: 100%;
-}
-
-.view-details-btn:active {
-    transform: translateY(0);
-}
-
-/* Section Transition Effects */
-.elder-dragons-section:hover ~ .location-page {
-    background-color: rgba(165, 94, 234, 0.1);
-}
-
-.large-monsters-section:hover ~ .location-page {
-    background-color: rgba(225, 112, 85, 0.1);
-}
-
-.small-monsters-section:hover ~ .location-page {
-    background-color: rgba(106, 176, 76, 0.1);
-}
-
-/* Loading Animation */
-.loading {
-    height: 3px;
-    width: 100%;
-    background: linear-gradient(
-        to right,
-        transparent,
-        rgba(255, 215, 0, 0.5),
-        transparent
-    );
-    background-size: 1000px 100%;
-    animation: shimmer 2s infinite linear;
-}
-
-/* Responsive Design */
-@media (max-width: 1200px) {
-    .location-header h1 { font-size: 3rem; }
-    .location-image-container { height: 400px; }
-}
-
+/* Responsive design */
 @media (max-width: 768px) {
-    .location-header h1 { font-size: 2.5rem; }
-    .location-image-container { height: 300px; }
-    .location-description { margin-top: -30px; }
-    .monsters-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
-    .monster-image-container { height: 100px; }
+    .location-hero {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .location-image-container {
+        height: 300px;
+    }
+    
+    .monsters-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
 }
 
 @media (max-width: 480px) {
-    .location-header h1 { font-size: 2rem; }
-    .location-image-container { height: 250px; }
-    .location-description { 
-        margin-top: -20px;
-        padding: 1.5rem; 
+    .location-header h1 {
+        font-size: 1.8em;
     }
-    .monsters-grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; }
-    .monster-header h3 { font-size: 0.8rem; }
-}
-
-/* Back Button */
-.back-button {
-    position: absolute;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.6);
-    color: #fff;
-    padding: 12px 25px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 500;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: all 0.3s ease;
-    z-index: 10;
+    
+    .monsters-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
 }
